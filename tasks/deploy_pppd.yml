@@ -1,0 +1,104 @@
+---
+- name: "pppd | Deploy pppd link configuration"
+  ansible.builtin.template:
+    src: "pppd.j2"
+    dest: "{{ hostvars[inventory_hostname]['pppd_dest'] + '/peers/' ~
+      vars['outer_item'] }}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+    validate: "pppd dryrun file %s"
+  loop: "{{ hostvars[inventory_hostname]['pppd'] |
+    community.general.json_query(\"[].settings[?linkname=='\" ~
+    vars['outer_item'] ~ \"']\") | flatten(levels=1) }}"
+  loop_control:
+    loop_var: "link"
+    label: "{{ vars['outer_item'] }}"
+  notify:
+    - "Restart pppd link"
+- name: "pppd | Deploy ppp link triggers (ifup)"
+  ansible.builtin.template:
+    src: "ifup_local.j2"
+    dest: "{{ hostvars[inventory_hostname]['pppd_dest'] + '/ip-up.d/' ~
+      vars['outer_item'] ~ '.sh' }}"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  loop: "{{ hostvars[inventory_hostname]['pppd'] |
+    community.general.json_query(\"[].settings[?linkname=='\" ~
+    vars['outer_item'] ~ \"']\") | flatten(levels=1) }}"
+  loop_control:
+    loop_var: "link"
+    label: "{{ 'ifup_local: ' ~ vars['outer_item'] }}"
+  when:
+    - "link['ifup_local'] is defined"
+    - "link['ifup_local'] not in ['', [], None]"
+- name: "pppd | Deploy ppp link triggers (ifdown)"
+  ansible.builtin.template:
+    src: "ifdown_local.j2"
+    dest: "{{ hostvars[inventory_hostname]['pppd_dest'] + '/ip-down.d/' ~
+      vars['outer_item'] ~ '.sh' }}"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  loop: "{{ hostvars[inventory_hostname]['pppd'] |
+    community.general.json_query(\"[].settings[?linkname=='\" ~
+    vars['outer_item'] ~ \"']\") | flatten(levels=1) }}"
+  loop_control:
+    loop_var: "link"
+    label: "{{ 'ifdown_local: ' ~ vars['outer_item'] }}"
+  when:
+    - "link['ifdown_local'] is defined"
+    - "link['ifdown_local'] not in ['', [], None]"
+- name: "pppd | Create ppp link systemd service override catalog"
+  ansible.builtin.file:
+    path: "{{ '/etc/systemd/system/' ~
+      hostvars[inventory_hostname]['pppd_service'] ~ vars['outer_item'] ~
+      '.service.d' }}"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  loop: "{{ hostvars[inventory_hostname]['pppd'] |
+    community.general.json_query(\"[].settings[?linkname=='\" ~
+    vars['outer_item'] ~ \"']\") | flatten(levels=1) }}"
+  loop_control:
+    loop_var: "link"
+    label: "{{ 'systemd_override: ' ~ vars['outer_item'] }}"
+  when:
+    - "link['ttyname'] is defined"
+    - "link['ttyname'] not in ['', [], None]"
+    - "link['systemd_override'] is defined"
+    - "link['systemd_override'] == 'true'"
+- name: "pppd | Deploy ppp link systemd service override conf"
+  ansible.builtin.template:
+    src: "pppd_systemd.j2"
+    dest: "{{ '/etc/systemd/system/' +
+      hostvars[inventory_hostname]['pppd_service'] ~ vars['outer_item'] ~
+      '.service.d/override.conf' }}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  loop: "{{ hostvars[inventory_hostname]['pppd'] |
+    community.general.json_query(\"[].settings[?linkname=='\" ~
+    vars['outer_item'] ~ \"']\") | flatten(levels=1) }}"
+  loop_control:
+    loop_var: "link"
+    label: "{{ 'systemd_override: ' ~ vars['outer_item'] }}"
+  when:
+    - "link['ttyname'] is defined"
+    - "link['ttyname'] not in ['', [], None]"
+    - "link['systemd_override'] is defined"
+    - "link['systemd_override'] == 'true'"
+- name: "pppd | Enable systemd service"
+  ansible.builtin.systemd:
+    name: "{{ hostvars[inventory_hostname]['pppd_service'] ~
+      vars['outer_item'] }}"
+    enabled: "yes"
+  when:
+    - "hostvars[inventory_hostname]['pppd'] |
+      community.general.json_query(vars['pppd_enable']) is defined"
+    - "hostvars[inventory_hostname]['pppd'] |
+      community.general.json_query(vars['pppd_enable']) == 'true'"
+  vars:
+    pppd_enable: "[] | map(&enable || 'false', @) | [0]"

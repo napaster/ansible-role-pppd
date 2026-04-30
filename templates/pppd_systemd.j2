@@ -1,0 +1,7 @@
+{{ '## override.conf' }}
+{{ '# ' + ansible_managed }}
+{{ '# Do not edit manually' }}
+
+{{ '[Unit]' }}
+{{ 'BindsTo=sys-devices-virtual-net-' + link['ttyname'] + '.device' }}
+{{ 'After=sys-devices-virtual-net-' + link['ttyname'] + '.device' }}

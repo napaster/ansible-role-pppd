@@ -1,0 +1,49 @@
+---
+- name: "pppd | Assert that system manager is systemd"
+  ansible.builtin.assert:
+    that:
+      - "hostvars[inventory_hostname]['ansible_service_mgr'] == 'systemd'"
+    fail_msg: "System manager is not systemd"
+    quiet: "true"
+- name: "pppd | Add the OS specific varibles"
+  ansible.builtin.include_vars:
+    file: "{{ hostvars[inventory_hostname]['ansible_os_family'] + '.yml' }}"
+- name: "pppd | Set facts about pppd role"
+  ansible.builtin.set_fact:
+    pppd_links: "{{ hostvars[inventory_hostname]['pppd'] |
+      community.general.json_query('[].settings[].linkname') }}"
+    pppd_package_state: "{{ hostvars[inventory_hostname]['pppd'] |
+      community.general.json_query('[].package_state | [0]') }}"
+  when:
+    - "hostvars[inventory_hostname]['pppd'] is defined"
+    - "hostvars[inventory_hostname]['pppd'] not in ['', [], None]"
+- name: "pppd | Assert that package state in valid value"
+  ansible.builtin.assert:
+    that:
+      - "vars['pppd_package_state'] in ['present', 'latest']"
+    fail_msg: "'package_state' must be in 'present' or 'latest'"
+    quiet: "true"
+  when:
+    - "vars['pppd_package_state'] is defined"
+    - "vars['pppd_package_state'] not in ['', [], None]"
+- name: "pppd | Set package state to 'present' cause value is not defined"
+  ansible.builtin.set_fact:
+    pppd_package_state: "present"
+  when:
+    - "vars['pppd_package_state'] is defined"
+    - "(vars['pppd_package_state'] == '' or
+      vars['pppd_package_state'] == None)"
+- name: "pppd | Create ppp settings directory"
+  ansible.builtin.file:
+    path: "{{ hostvars[inventory_hostname]['pppd_dest'] + '/' + item }}"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  loop:
+    - 'peers'
+    - 'ip-up.d'
+    - 'ip-down.d'
+  when:
+    - "vars['pppd_links'] is defined"
+    - "vars['pppd_links'] not in ['', [], None]"

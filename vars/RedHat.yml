@@ -1,0 +1,4 @@
+---
+pppd_service: 'ppp@'
+pppd_dest: '/etc/ppp'
+pppd_package: 'ppp'

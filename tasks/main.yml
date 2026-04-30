@@ -1,0 +1,22 @@
+---
+- name: "pppd | Include pre requisite tasks"
+  ansible.builtin.import_tasks:
+    file: "pre_requisite.yml"
+- name: "pppd | Include packages tasks"
+  ansible.builtin.include_tasks:
+    file: "packages.yml"
+  when:
+    - "hostvars[inventory_hostname]['pppd'] is defined"
+    - "hostvars[inventory_hostname]['pppd'] != ''"
+    - "hostvars[inventory_hostname]['pppd'] |
+      community.general.json_query(vars['pppd_install_package']) is defined"
+    - "hostvars[inventory_hostname]['pppd'] |
+      community.general.json_query(vars['pppd_install_package']) == 'true'"
+  vars:
+    pppd_install_package: "[] | map(&install_package || 'false', @) | [0]"
+- name: "pppd | Include deployment tasks"
+  ansible.builtin.include_tasks:
+    file: "pppd_executor.yml"
+  when:
+    - "vars['pppd_links'] is defined"
+    - "vars['pppd_links'] not in ['', [], None]"

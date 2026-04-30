@@ -1,0 +1,532 @@
+{{ '## ' + link['linkname'] }}
+{{ '# ' + ansible_managed }}
+{{ '# Do not edit manually' }}
+
+{{ 'linkname' ~ ' \"' ~ link['linkname'] ~ '\"' }}
+{% if link['plugin'] is defined and link['plugin'] != '' %}
+{{ 'plugin ' + link['plugin'] }}
+{% endif %}
+{% if link['ttyname'] is defined and link['ttyname'] != '' %}
+{{ link['ttyname'] }}
+{% endif %}
+{% if link['asyncmap'] is defined and link['asyncmap'] != '' %}
+{{ 'asyncmap ' ~ link['asyncmap'] }}
+{% endif %}
+{% if link['auth'] is defined and link['auth'] == 'true' %}
+{{ 'auth' }}
+{% endif %}
+{% if link['call'] is defined and link['call'] != '' %}
+{{ 'call ' ~ link['call'] }}
+{% endif %}
+{% if link['connect'] is defined and link['connect'] != '' %}
+{{ 'connect ' ~ link['connect'] }}
+{% endif %}
+{% if link['crtscts'] is defined and link['crtscts'] == 'true' %}
+{{ 'crtscts' }}
+{% endif %}
+{% if link['defaultroute'] is defined and link['defaultroute'] == 'true' %}
+{{ 'defaultroute' }}
+{% endif %}
+{% if link['disconnect'] is defined and link['disconnect'] != '' %}
+{{ 'disconnect ' ~ link['disconnect'] }}
+{% endif %}
+{% if link['escape'] is defined and link['escape'] != '' %}
+{{ 'escape ' ~ link['escape'] }}
+{% endif %}
+{% if link['file'] is defined and link['file'] != '' %}
+{{ 'file ' ~ link['file'] }}
+{% endif %}
+{% if link['init'] is defined and link['init'] != '' %}
+{{ 'init ' ~ link['init'] }}
+{% endif %}
+{% if link['lock'] is defined and link['lock'] == 'true' %}
+{{ 'lock' }}
+{% endif %}
+{% if link['mru'] is defined and link['mru'] != '' %}
+{{ 'mru ' ~ link['mru'] }}
+{% endif %}
+{% if link['mtu'] is defined and link['mtu'] != '' %}
+{{ 'mtu ' ~ link['mtu'] }}
+{% endif %}
+{% if link['passive'] is defined and link['passive'] == 'true' %}
+{{ 'passive' }}
+{% endif %}
+{% if link['active_filter'] is defined and link['active_filter'] != '' %}
+{{ 'active-filter ' ~ link['mtu'] }}
+{% endif %}
+{% if link['allow_ip'] is defined and link['allow_ip'] != '' %}
+{{ 'allow-ip ' ~ link['allow_ip'] }}
+{% endif %}
+{% if link['allow_number'] is defined and link['allow_number'] != '' %}
+{{ 'allow-number ' ~ link['allow_number'] }}
+{% endif %}
+{% if link['bsdcomp'] is defined and link['bsdcomp'] != '' %}
+{{ 'bsdcomp ' ~ link['bsdcomp'] }}
+{% endif %}
+{% if link['cdtrcts'] is defined and link['cdtrcts'] == 'true' %}
+{{ 'cdtrcts' }}
+{% endif %}
+{% if link['chap_interval'] is defined and link['chap_interval'] != '' %}
+{{ 'chap-interval ' ~ link['chap_interval'] }}
+{% endif %}
+{% if link['chap_max_challenge'] is defined and
+  link['chap_max_challenge'] != '' %}
+{{ 'chap-max-challenge ' ~ link['chap_max_challenge'] }}
+{% endif %}
+{% if link['chap_restart'] is defined and link['chap_restart'] != '' %}
+{{ 'chap-restart ' ~ link['chap_restart'] }}
+{% endif %}
+{% if link['child_timeout'] is defined and link['child_timeout'] != '' %}
+{{ 'child-timeout ' ~ link['child_timeout'] }}
+{% endif %}
+{% if link['connect_delay'] is defined and link['connect_delay'] != '' %}
+{{ 'connect-delay ' ~ link['connect_delay'] }}
+{% endif %}
+{% if link['debug'] is defined and link['debug'] == 'true' %}
+{{ 'debug' }}
+{% endif %}
+{% if link['default_asyncmap'] is defined and
+  link['default_asyncmap'] == 'true' %}
+{{ 'default-asyncmap' }}
+{% endif %}
+{% if link['default_mru'] is defined and link['default_mru'] == 'true' %}
+{{ 'default-mru' }}
+{% endif %}
+{% if link['deflate'] is defined and link['deflate'] != '' %}
+{{ 'deflate ' ~ link['deflate'] }}
+{% endif %}
+{% if link['demand'] is defined and link['demand'] == 'true' %}
+{{ 'demand' }}
+{% endif %}
+{% if link['demand'] is defined and link['demand'] == 'true' %}
+{{ 'demand' }}
+{% endif %}
+{% if link['domain'] is defined and link['domain'] != '' %}
+{{ 'domain ' ~ link['domain'] }}
+{% endif %}
+{% if link['dump'] is defined and link['dump'] == 'true' %}
+{{ 'dump' }}
+{% endif %}
+{% if link['enable_session'] is defined and link['enable_session'] == 'true' %}
+{{ 'enable-session' }}
+{% endif %}
+{% if link['endpoint'] is defined and link['endpoint'] != '' %}
+{{ 'endpoint ' ~ link['endpoint'] }}
+{% endif %}
+{% if link['eap_interval'] is defined and link['eap_interval'] != '' %}
+{{ 'eap-interval ' ~ link['eap_interval'] }}
+{% endif %}
+{% if link['eap_max_rreq'] is defined and link['eap_max_rreq'] != '' %}
+{{ 'eap-max-rreq ' ~ link['eap_max_rreq'] }}
+{% endif %}
+{% if link['eap_max_sreq'] is defined and link['eap_max_sreq'] != '' %}
+{{ 'eap-max-sreq ' ~ link['eap_max_sreq'] }}
+{% endif %}
+{% if link['eap_restart'] is defined and link['eap_restart'] != '' %}
+{{ 'eap-restart ' ~ link['eap_restart'] }}
+{% endif %}
+{% if link['eap_timeout'] is defined and link['eap_timeout'] != '' %}
+{{ 'eap-timeout ' ~ link['eap_timeout'] }}
+{% endif %}
+{% if link['hide_password'] is defined and link['hide_password'] == 'true' %}
+{{ 'hide-password' }}
+{% endif %}
+{% if link['holdoff'] is defined and link['holdoff'] != '' %}
+{{ 'holdoff ' ~ link['holdoff'] }}
+{% endif %}
+{% if link['idle'] is defined and link['idle'] != '' %}
+{{ 'idle ' ~ link['idle'] }}
+{% endif %}
+{% if link['ipcp_accept_local'] is defined and
+  link['ipcp_accept_local'] == 'true' %}
+{{ 'ipcp-accept-local' }}
+{% endif %}
+{% if link['ipcp_accept_remote'] is defined and
+  link['ipcp_accept_remote'] == 'true' %}
+{{ 'ipcp-accept-remote' }}
+{% endif %}
+{% if link['ipcp_max_configure'] is defined and
+  link['ipcp_max_configure'] != '' %}
+{{ 'ipcp-max-configure ' ~ link['ipcp_max_configure'] }}
+{% endif %}
+{% if link['ipcp_max_failure'] is defined and
+  link['ipcp_max_failure'] != '' %}
+{{ 'ipcp-max-failure ' ~ link['ipcp_max_failure'] }}
+{% endif %}
+{% if link['ipcp_max_terminate'] is defined and
+  link['ipcp_max_terminate'] != '' %}
+{{ 'ipcp-max-terminate ' ~ link['ipcp_max_terminate'] }}
+{% endif %}
+{% if link['ipcp_restart'] is defined and link['ipcp_restart'] != '' %}
+{{ 'ipcp-restart ' ~ link['ipcp_restart'] }}
+{% endif %}
+{% if link['ipparam'] is defined and link['ipparam'] != '' %}
+{{ 'ipparam ' ~ link['ipparam'] }}
+{% endif %}
+{% if link['ipv6cp_accept_local'] is defined and
+  link['ipv6cp_accept_local'] == 'true' %}
+{{ 'ipv6cp-accept-local' }}
+{% endif %}
+{% if link['ipv6cp_max_configure'] is defined and
+  link['ipv6cp_max_configure'] != '' %}
+{{ 'ipv6cp-max-configure ' ~ link['ipv6cp_max_configure'] }}
+{% endif %}
+{% if link['ipv6cp_max_failure'] is defined and
+  link['ipv6cp_max_failure'] != '' %}
+{{ 'ipv6cp-max-failure ' ~ link['ipv6cp_max_failure'] }}
+{% endif %}
+{% if link['ipv6cp_max_terminate'] is defined and
+  link['ipv6cp_max_terminate'] != '' %}
+{{ 'ipv6cp-max-terminate ' ~ link['ipv6cp_max_terminate'] }}
+{% endif %}
+{% if link['ipv6cp_restart'] is defined and link['ipv6cp_restart'] != '' %}
+{{ 'ipv6cp_restart ' ~ link['ipv6cp_restart'] }}
+{% endif %}
+{% if link['ipx'] is defined and link['ipx'] == 'true' %}
+{{ 'ipx' }}
+{% endif %}
+{% if link['ipx_network'] is defined and link['ipx_network'] != '' %}
+{{ 'ipx-network ' ~ link['ipx_network'] }}
+{% endif %}
+{% if link['ipx_node'] is defined and link['ipx_node'] != '' %}
+{{ 'ipx-node ' ~ link['ipx_node'] }}
+{% endif %}
+{% if link['ipx_router_name'] is defined and link['ipx_router_name'] != '' %}
+{{ 'ipx-router-name ' ~ link['ipx_router_name'] }}
+{% endif %}
+{% if link['ipx_routing'] is defined and link['ipx_routing'] != '' %}
+{{ 'ipx-routing ' ~ link['ipx_routing'] }}
+{% endif %}
+{% if link['ipxcp_accept_local'] is defined and
+  link['ipxcp_accept_local'] == 'true' %}
+{{ 'ipxcp-accept-local' }}
+{% endif %}
+{% if link['ipxcp_accept_network'] is defined and
+  link['ipxcp_accept_network'] == 'true' %}
+{{ 'ipxcp-accept-network' }}
+{% endif %}
+{% if link['ipxcp_accept_remote'] is defined and
+  link['ipxcp_accept_remote'] == 'true' %}
+{{ 'ipxcp-accept-remote' }}
+{% endif %}
+{% if link['ipxcp_max_configure'] is defined and
+  link['ipxcp_max_configure'] != '' %}
+{{ 'ipxcp-max-configure ' ~ link['ipxcp_max_configure'] }}
+{% endif %}
+{% if link['ipxcp_max_failure'] is defined and
+  link['ipxcp_max_failure'] != '' %}
+{{ 'ipxcp-max-failure ' ~ link['ipxcp_max_failure'] }}
+{% endif %}
+{% if link['ipxcp_max_terminate'] is defined and
+  link['ipxcp_max_terminate'] != '' %}
+{{ 'ipxcp-max-terminate ' ~ link['ipxcp_max_terminate'] }}
+{% endif %}
+{% if link['kdebug'] is defined and link['kdebug'] != '' %}
+{{ 'kdebug ' ~ link['kdebug'] }}
+{% endif %}
+{% if link['ktune'] is defined and link['ktune'] == 'true' %}
+{{ 'ktune' }}
+{% endif %}
+{% if link['lcp_echo_failure'] is defined and link['lcp_echo_failure'] != '' %}
+{{ 'lcp-echo-failure ' ~ link['lcp_echo_failure'] }}
+{% endif %}
+{% if link['lcp_echo_interval'] is defined and
+  link['lcp_echo_interval'] != '' %}
+{{ 'lcp-echo-interval ' ~ link['lcp_echo_interval'] }}
+{% endif %}
+{% if link['lcp_max_configure'] is defined and
+  link['lcp_max_configure'] != '' %}
+{{ 'lcp-max-configure ' ~ link['lcp_max_configure'] }}
+{% endif %}
+{% if link['lcp_max_failure'] is defined and link['lcp_max_failure'] != '' %}
+{{ 'lcp-max-failure ' ~ link['lcp_max_failure'] }}
+{% endif %}
+{% if link['lcp_max_terminate'] is defined and
+  link['lcp_max_terminate'] != '' %}
+{{ 'lcp-max-terminate ' ~ link['lcp_max_terminate'] }}
+{% endif %}
+{% if link['lcp_restart'] is defined and link['lcp_restart'] != '' %}
+{{ 'lcp-restart ' ~ link['lcp_restart'] }}
+{% endif %}
+{% if link['local'] is defined and link['local'] == 'true' %}
+{{ 'local' }}
+{% endif %}
+{% if link['logfd'] is defined and link['logfd'] != '' %}
+{{ 'logfd ' ~ link['logfd'] }}
+{% endif %}
+{% if link['logfile'] is defined and link['logfile'] != '' %}
+{{ 'logfile ' ~ link['logfile'] }}
+{% endif %}
+{% if link['login'] is defined and link['login'] == 'true' %}
+{{ 'login' }}
+{% endif %}
+{% if link['master_detach'] is defined and link['master_detach'] == 'true' %}
+{{ 'master_detach' }}
+{% endif %}
+{% if link['maxconnect'] is defined and link['maxconnect'] != '' %}
+{{ 'maxconnect ' ~ link['maxconnect'] }}
+{% endif %}
+{% if link['maxfail'] is defined and link['maxfail'] != '' %}
+{{ 'maxfail ' ~ link['maxfail'] }}
+{% endif %}
+{% if link['modem'] is defined and link['modem'] == 'true' %}
+{{ 'modem' }}
+{% endif %}
+{% if link['mp'] is defined and link['mp'] == 'true' %}
+{{ 'mp' }}
+{% endif %}
+{% if link['mppe_stateful'] is defined and link['mppe_stateful'] == 'true' %}
+{{ 'mppe-stateful' }}
+{% endif %}
+{% if link['mpshortseq'] is defined and link['mpshortseq'] == 'true' %}
+{{ 'mpshortseq' }}
+{% endif %}
+{% if link['mrru'] is defined and link['mrru'] != '' %}
+{{ 'mrru ' ~ link['mrru'] }}
+{% endif %}
+{% if link['ms_dns'] is defined and link['ms_dns'] != '' %}
+{{ 'ms-dns ' ~ link['ms_dns'] }}
+{% endif %}
+{% if link['ms_wins'] is defined and link['ms_wins'] != '' %}
+{{ 'ms-wins ' ~ link['ms_wins'] }}
+{% endif %}
+{% if link['multilink'] is defined and link['multilink'] == 'true' %}
+{{ 'multilink' }}
+{% endif %}
+{% if link['name'] is defined and link['name'] != '' %}
+{{ 'name ' ~ link['name'] }}
+{% endif %}
+{% if link['noaccomp'] is defined and link['noaccomp'] == 'true' %}
+{{ 'noaccomp' }}
+{% endif %}
+{% if link['noauth'] is defined and link['noauth'] == 'true' %}
+{{ 'noauth' }}
+{% endif %}
+{% if link['nobsdcomp'] is defined and link['nobsdcomp'] == 'true' %}
+{{ 'nobsdcomp' }}
+{% endif %}
+{% if link['noccp'] is defined and link['noccp'] == 'true' %}
+{{ 'noccp' }}
+{% endif %}
+{% if link['nocrtscts'] is defined and link['nocrtscts'] == 'true' %}
+{{ 'nocrtscts' }}
+{% endif %}
+{% if link['nodefaultroute'] is defined and link['nodefaultroute'] == 'true' %}
+{{ 'nodefaultroute' }}
+{% endif %}
+{% if link['nodeflate'] is defined and link['nodeflate'] == 'true' %}
+{{ 'nodeflate' }}
+{% endif %}
+{% if link['nodetach'] is defined and link['nodetach'] == 'true' %}
+{{ 'nodetach' }}
+{% endif %}
+{% if link['noendpoint'] is defined and link['noendpoint'] == 'true' %}
+{{ 'noendpoint' }}
+{% endif %}
+{% if link['noip'] is defined and link['noip'] == 'true' %}
+{{ 'noip' }}
+{% endif %}
+{% if link['noipv6'] is defined and link['noipv6'] == 'true' %}
+{{ 'noipv6' }}
+{% endif %}
+{% if link['noipdefault'] is defined and link['noipdefault'] == 'true' %}
+{{ 'noipdefault' }}
+{% endif %}
+{% if link['noipx'] is defined and link['noipx'] == 'true' %}
+{{ 'noipx' }}
+{% endif %}
+{% if link['noktune'] is defined and link['noktune'] == 'true' %}
+{{ 'noktune' }}
+{% endif %}
+{% if link['nolock'] is defined and link['nolock'] == 'true' %}
+{{ 'nolock' }}
+{% endif %}
+{% if link['nolog'] is defined and link['nolog'] == 'true' %}
+{{ 'nolog' }}
+{% endif %}
+{% if link['nomagic'] is defined and link['nomagic'] == 'true' %}
+{{ 'nomagic' }}
+{% endif %}
+{% if link['nomp'] is defined and link['nomp'] == 'true' %}
+{{ 'nomp' }}
+{% endif %}
+{% if link['nomppe'] is defined and link['nomppe'] == 'true' %}
+{{ 'nomppe' }}
+{% endif %}
+{% if link['nomppe_40'] is defined and link['nomppe_40'] == 'true' %}
+{{ 'nomppe-40' }}
+{% endif %}
+{% if link['nomppe_128'] is defined and link['nomppe_128'] == 'true' %}
+{{ 'nomppe-128' }}
+{% endif %}
+{% if link['nomppe_stateful'] is defined and
+  link['nomppe_stateful'] == 'true' %}
+{{ 'nomppe-stateful' }}
+{% endif %}
+{% if link['nompshortseq'] is defined and link['nompshortseq'] == 'true' %}
+{{ 'nompshortseq' }}
+{% endif %}
+{% if link['nomultilink'] is defined and link['nomultilink'] == 'true' %}
+{{ 'nomultilink' }}
+{% endif %}
+{% if link['nopcomp'] is defined and link['nopcomp'] == 'true' %}
+{{ 'nopcomp' }}
+{% endif %}
+{% if link['nopersist'] is defined and link['nopersist'] == 'true' %}
+{{ 'nopersist' }}
+{% endif %}
+{% if link['nopredictor1'] is defined and link['nopredictor1'] == 'true' %}
+{{ 'nopredictor1' }}
+{% endif %}
+{% if link['noproxyarp'] is defined and link['noproxyarp'] == 'true' %}
+{{ 'noproxyarp' }}
+{% endif %}
+{% if link['noremoteip'] is defined and link['noremoteip'] == 'true' %}
+{{ 'noremoteip' }}
+{% endif %}
+{% if link['notty'] is defined and link['notty'] == 'true' %}
+{{ 'notty' }}
+{% endif %}
+{% if link['novj'] is defined and link['novj'] == 'true' %}
+{{ 'novj' }}
+{% endif %}
+{% if link['novjccomp'] is defined and link['novjccomp'] == 'true' %}
+{{ 'novjccomp' }}
+{% endif %}
+{% if link['papcrypt'] is defined and link['papcrypt'] == 'true' %}
+{{ 'papcrypt' }}
+{% endif %}
+{% if link['pap_max_authreq'] is defined and link['pap_max_authreq'] != '' %}
+{{ 'pap-max-authreq ' ~ link['pap_max_authreq'] }}
+{% endif %}
+{% if link['pap_restart'] is defined and link['pap_restart'] != '' %}
+{{ 'pap-restart ' ~ link['pap_restart'] }}
+{% endif %}
+{% if link['pap_timeout'] is defined and link['pap_timeout'] != '' %}
+{{ 'pap-timeout ' ~ link['pap_timeout'] }}
+{% endif %}
+{% if link['pass_filter'] is defined and link['pass_filter'] != '' %}
+{{ 'pass-filter ' ~ link['pass_filter'] }}
+{% endif %}
+{% if link['password'] is defined and link['password'] != '' %}
+{{ 'password \"' ~ link['password'] ~ '\"' }}
+{% endif %}
+{% if link['persist'] is defined and link['persist'] == 'true' %}
+{{ 'persist' }}
+{% endif %}
+{% if link['predictor1'] is defined and link['predictor1'] == 'true' %}
+{{ 'predictor1' }}
+{% endif %}
+{% if link['privgroup'] is defined and link['privgroup'] != '' %}
+{{ 'privgroup ' ~ link['privgroup'] }}
+{% endif %}
+{% if link['proxyarp'] is defined and link['proxyarp'] == 'true' %}
+{{ 'proxyarp' }}
+{% endif %}
+{% if link['pty'] is defined and link['pty'] != '' %}
+{{ 'pty ' ~ link['pty'] }}
+{% endif %}
+{% if link['receive_all'] is defined and link['receive_all'] == 'true' %}
+{{ 'receive-all' }}
+{% endif %}
+{% if link['record'] is defined and link['record'] != '' %}
+{{ 'record ' ~ link['record'] }}
+{% endif %}
+{% if link['remotename'] is defined and link['remotename'] != '' %}
+{{ 'remotename ' ~ link['remotename'] }}
+{% endif %}
+{% if link['remotenumber'] is defined and link['remotenumber'] != '' %}
+{{ 'remotenumber ' ~ link['remotenumber'] }}
+{% endif %}
+{% if link['refuse_chap'] is defined and link['refuse_chap'] == 'true' %}
+{{ 'refuse-chap' }}
+{% endif %}
+{% if link['refuse_mschap'] is defined and link['refuse_mschap'] == 'true' %}
+{{ 'refuse-mschap' }}
+{% endif %}
+{% if link['refuse_mschap_v2'] is defined and
+  link['refuse_mschap_v2'] == 'true' %}
+{{ 'refuse-mschap-v2' }}
+{% endif %}
+{% if link['refuse_eap'] is defined and link['refuse_eap'] == 'true' %}
+{{ 'refuse-eap' }}
+{% endif %}
+{% if link['refuse_pap'] is defined and link['refuse_pap'] == 'true' %}
+{{ 'refuse-pap' }}
+{% endif %}
+{% if link['require_chap'] is defined and link['require_chap'] == 'true' %}
+{{ 'require-chap' }}
+{% endif %}
+{% if link['require_mppe'] is defined and link['require_mppe'] == 'true' %}
+{{ 'require-mppe' }}
+{% endif %}
+{% if link['require_mppe_40'] is defined and
+  link['require_mppe_40'] == 'true' %}
+{{ 'require-mppe-40' }}
+{% endif %}
+{% if link['require_mppe_128'] is defined and
+  link['require_mppe_128'] == 'true' %}
+{{ 'require-mppe-128' }}
+{% endif %}
+{% if link['require_mschap_v2'] is defined and
+  link['require_mschap_v2'] == 'true' %}
+{{ 'require-mschap-v2' }}
+{% endif %}
+{% if link['require_eap'] is defined and link['require_eap'] == 'true' %}
+{{ 'require-eap' }}
+{% endif %}
+{% if link['require_eap'] is defined and link['require_eap'] == 'true' %}
+{{ 'require-eap' }}
+{% endif %}
+{% if link['require_pap'] is defined and link['require_pap'] == 'true' %}
+{{ 'require-pap' }}
+{% endif %}
+{% if link['set'] is defined and link['set'] != '' %}
+{{ 'set \"' + link['set'] + '\"' }}
+{% endif %}
+{% if link['show_password'] is defined and link['show_password'] == 'true' %}
+{{ 'show-password' }}
+{% endif %}
+{% if link['silent'] is defined and link['silent'] == 'true' %}
+{{ 'silent' }}
+{% endif %}
+{% if link['srp_interval'] is defined and link['srp_interval'] == 'true' %}
+{{ 'srp-interval' }}
+{% endif %}
+{% if link['srp_pn_secret'] is defined and link['srp_pn_secret'] != '' %}
+{{ 'srp-pn-secret ' ~ link['srp_pn_secret'] }}
+{% endif %}
+{% if link['srp_use_pseudonym'] is defined and
+  link['srp_use_pseudonym'] == 'true' %}
+{{ 'srp-use-pseudonym' }}
+{% endif %}
+{% if link['sync'] is defined and link['sync'] == 'true' %}
+{{ 'sync' }}
+{% endif %}
+{% if link['unit'] is defined and link['unit'] != '' %}
+{{ 'unit \"' + link['unit'] + '\"' }}
+{% endif %}
+{% if link['unset'] is defined and link['unset'] != '' %}
+{{ 'unset \"' + link['unset'] + '\"' }}
+{% endif %}
+{% if link['updetach'] is defined and link['updetach'] == 'true' %}
+{{ 'updetach' }}
+{% endif %}
+{% if link['usehostname'] is defined and link['usehostname'] == 'true' %}
+{{ 'usehostname' }}
+{% endif %}
+{% if link['usepeerdns'] is defined and link['usepeerdns'] == 'true' %}
+{{ 'usepeerdns' }}
+{% endif %}
+{% if link['user'] is defined and link['user'] != '' %}
+{{ 'user \"' + link['user'] + '\"' }}
+{% endif %}
+{% if link['vj_max_slots'] is defined and link['vj_max_slots'] != '' %}
+{{ 'vj-max-slots \"' + link['vj_max_slots'] + '\"' }}
+{% endif %}
+{% if link['welcome'] is defined and link['welcome'] != '' %}
+{{ 'welcome \"' + link['welcome'] + '\"' }}
+{% endif %}
+{% if link['xonxoff'] is defined and link['xonxoff'] != '' %}
+{{ 'xonxoff \"' + link['xonxoff'] + '\"' }}
+{% endif %}

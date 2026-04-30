@@ -1,0 +1,19 @@
+---
+- name: "Restart pppd link"
+  ansible.builtin.systemd:
+    name: "{{ hostvars[inventory_hostname]['pppd_service'] ~ link }}"
+    state: "restarted"
+  loop: "{{ vars['pppd_links'] | flatten(levels=1) }}"
+  loop_control:
+    loop_var: "link"
+    label: "{{ 'Restart ' + hostvars[inventory_hostname]['pppd_service'] ~
+      link }}"
+  when:
+    - "hostvars[inventory_hostname]['pppd'] is defined"
+    - "hostvars[inventory_hostname]['pppd'] != ''"
+    - "hostvars[inventory_hostname]['pppd'] |
+        community.general.json_query(vars['pppd_restart']) is defined"
+    - "hostvars[inventory_hostname]['pppd'] |
+        community.general.json_query(vars['pppd_restart']) == 'true'"
+  vars:
+    pppd_restart: "[] | map(&restart || 'false', @) | [0]"

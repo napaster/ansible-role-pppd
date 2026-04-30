@@ -1,0 +1,10 @@
+{{ '#!/bin/bash' }}
+{{ '## ' ~ link['linkname'] ~ '.sh' }}
+{{ '# ' + ansible_managed }}
+{{ '# Do not edit manually' }}
+
+{% for t in link['ifdown_local'] %}
+{% if t != '' %}
+{{ t }}
+{% endif %}
+{% endfor %}

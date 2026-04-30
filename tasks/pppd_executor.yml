@@ -1,0 +1,7 @@
+---
+- name: "pppd | Include ppp profile deployment tasks"
+  ansible.builtin.include_tasks:
+    file: "deploy_pppd.yml"
+  loop: "{{ vars['pppd_links'] | flatten(levels=1) }}"
+  loop_control:
+    loop_var: "outer_item"
