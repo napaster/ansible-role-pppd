@@ -1,19 +1,34 @@
 ---
 - name: "Restart pppd link"
   ansible.builtin.systemd:
-    name: "{{ hostvars[inventory_hostname]['pppd_service'] ~ link }}"
+    name: "{{ pppd_service_prefix ~ link }}"
     state: "restarted"
-  loop: "{{ vars['pppd_links'] | flatten(levels=1) }}"
+    daemon_reload: yes
+  loop: "{{ pppd_links | flatten(levels=1) }}"
   loop_control:
     loop_var: "link"
-    label: "{{ 'Restart ' + hostvars[inventory_hostname]['pppd_service'] ~
-      link }}"
+    label: "{{ 'Restart ' + pppd_service_prefix ~ link }}"
   when:
-    - "hostvars[inventory_hostname]['pppd'] is defined"
-    - "hostvars[inventory_hostname]['pppd'] != ''"
-    - "hostvars[inventory_hostname]['pppd'] |
-        community.general.json_query(vars['pppd_restart']) is defined"
-    - "hostvars[inventory_hostname]['pppd'] |
-        community.general.json_query(vars['pppd_restart']) == 'true'"
+    - "pppd is defined"
+    - "pppd != ''"
+    - "pppd | community.general.json_query(pppd_restart_query) is defined"
+    - "pppd | community.general.json_query(pppd_restart_query) == 'true'"
   vars:
-    pppd_restart: "[] | map(&restart || 'false', @) | [0]"
+    pppd_service_prefix: "ppp@"
+    pppd_restart_query: "[].settings | [] | map(&restart || 'false', @) | [0]"
+
+- name: "Restart specific pppd link (with index)"
+  ansible.builtin.systemd:
+    name: "ppp@{{ item.linkname }}"
+    state: "restarted"
+    daemon_reload: yes
+  loop: "{{ pppd_settings | default([]) }}"
+  when:
+    - item.restart is defined
+    - item.restart | bool
+  listen: "restart pppd links"
+
+- name: "Reload systemd daemon"
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  listen: "reload systemd"
