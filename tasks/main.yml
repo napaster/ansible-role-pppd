@@ -2,6 +2,54 @@
 - name: "pppd | Include pre requisite tasks"
   ansible.builtin.import_tasks:
     file: "pre_requisite.yml"
+- name: "pppd | Stop and disable absent ppp links"
+  ansible.builtin.systemd:
+    name: "{{ hostvars[inventory_hostname]['pppd_service'] ~ item }}"
+    state: "stopped"
+    enabled: false
+    daemon_reload: true
+  loop: "{{ pppd_absent_links | default([]) }}"
+  failed_when: false
+  when:
+    - "pppd_absent_links | default([]) not in ['', [], None]"
+
+- name: "pppd | Remove absent ppp peer files"
+  ansible.builtin.file:
+    path: "{{ hostvars[inventory_hostname]['pppd_dest'] + '/peers/' ~ item }}"
+    state: "absent"
+  loop: "{{ pppd_absent_links | default([]) }}"
+  when:
+    - "pppd_absent_links | default([]) not in ['', [], None]"
+
+- name: "pppd | Remove absent ppp ifup hooks"
+  ansible.builtin.file:
+    path: "{{ hostvars[inventory_hostname]['pppd_dest'] + '/ip-up.d/' ~ item }}"
+    state: "absent"
+  loop: "{{ (pppd_absent_links | default([])) +
+    ((pppd_absent_links | default([])) | map('regex_replace', '$', '.sh') | list) }}"
+  when:
+    - "pppd_absent_links | default([]) not in ['', [], None]"
+
+- name: "pppd | Remove absent ppp ifdown hooks"
+  ansible.builtin.file:
+    path: "{{ hostvars[inventory_hostname]['pppd_dest'] + '/ip-down.d/' ~ item }}"
+    state: "absent"
+  loop: "{{ (pppd_absent_links | default([])) +
+    ((pppd_absent_links | default([])) | map('regex_replace', '$', '.sh') | list) }}"
+  when:
+    - "pppd_absent_links | default([]) not in ['', [], None]"
+
+- name: "pppd | Remove absent ppp systemd override directories"
+  ansible.builtin.file:
+    path: "{{ '/etc/systemd/system/' ~
+      hostvars[inventory_hostname]['pppd_service'] ~ item ~ '.service.d' }}"
+    state: "absent"
+  loop: "{{ pppd_absent_links | default([]) }}"
+  notify:
+    - "Reload systemd daemon"
+  when:
+    - "pppd_absent_links | default([]) not in ['', [], None]"
+
 - name: "pppd | Include packages tasks"
   ansible.builtin.include_tasks:
     file: "packages.yml"
@@ -26,15 +74,4 @@
     dest: /etc/ppp/chap-secrets
     mode: '0600'
   when: pppd_settings | selectattr('pty', 'defined') | list | length > 0
-  notify: restart pptp services
-
-- name: Ensure systemd overrides for PPTP connections
-  template:
-    src: pppd_service_override.j2
-    dest: "/etc/systemd/system/ppp@{{ item.linkname }}.service.d/override.conf"
-    mode: '0644'
-  loop: "{{ pppd_settings | selectattr('systemd_override', 'defined') | selectattr('systemd_override', 'equalto', 'true') | list }}"
-  when: 
-    - item.systemd_override | bool
-    - item.pty is defined
-  notify: daemon reload
+  notify: "Restart pppd link"
