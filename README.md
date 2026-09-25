@@ -25,11 +25,30 @@ pppd:
 # determining which instance of pppd is responsible for the link to a given
 # peer system.
   - linkname: 'ppp0' # mandatory for role
-# This feature allow to override shipped with package service unit. Reason for
-# this is dependency of 'ttyname' interface, because some times ppp was started
-# before vlan bridge is created and then ppp service will be failed. When this
-# option in 'true' 'ttyname' is mandatory.
+# This feature allow to override shipped with package service unit. Two things
+# it can do, both optional and independent:
+# 1. If 'ttyname' is set, bind the unit to that interface device (BindsTo /
+#    After). Reason: some times ppp was started before vlan bridge is created
+#    and then ppp service will be failed.
+# 2. Restart policy via 'systemd_restart', 'systemd_restart_sec',
+#    'systemd_timeout_start_sec', 'systemd_start_limit_interval_sec' and
+#    'systemd_start_limit_burst'. Shipped unit is 'Type=notify' with no
+#    'Restart=': if the peer is unreachable at boot, start times out and the
+#    link stays dead until started by hand. 'persist' in pppd does not help
+#    here, it only works once pppd is running.
     systemd_override: 'true'
+# Restart policy for the unit ('no', 'on-failure', 'always', ...). Empty or
+# absent keeps the shipped default.
+    systemd_restart: 'on-failure'
+# Delay before restart, seconds.
+    systemd_restart_sec: '60'
+# Start timeout, seconds or 'infinity'. Mind 'Before=network.target' in the
+# shipped unit: an endless start would hold network.target during boot.
+    systemd_timeout_start_sec: ''
+# Start rate limiting ('0' disables it). With a long 'systemd_restart_sec'
+# the default limit (5 in 10 s) is never hit, but keeps retries unbounded.
+    systemd_start_limit_interval_sec: '0'
+    systemd_start_limit_burst: ''
 # Load the shared library object file filename as a plugin. If filename does
 # not contain a slash (/), pppd will look in the '/usr/lib/pppd'.
     plugin: 'rp-pppoe.so'

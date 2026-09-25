@@ -65,9 +65,9 @@
   loop_control:
     loop_var: "link"
     label: "{{ 'systemd_override: ' ~ vars['outer_item'] }}"
+  notify:
+    - "Reload systemd daemon"
   when:
-    - "link['ttyname'] is defined"
-    - "link['ttyname'] not in ['', [], None]"
     - "link['systemd_override'] is defined"
     - "link['systemd_override'] == 'true'"
 - name: "pppd | Deploy ppp link systemd service override conf"
@@ -85,9 +85,9 @@
   loop_control:
     loop_var: "link"
     label: "{{ 'systemd_override: ' ~ vars['outer_item'] }}"
+  notify:
+    - "Reload systemd daemon"
   when:
-    - "link['ttyname'] is defined"
-    - "link['ttyname'] not in ['', [], None]"
     - "link['systemd_override'] is defined"
     - "link['systemd_override'] == 'true'"
 - name: "pppd | Enable systemd service"

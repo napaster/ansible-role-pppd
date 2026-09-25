@@ -3,5 +3,28 @@
 {{ '# Do not edit manually' }}
 
 {{ '[Unit]' }}
+{% if link['ttyname'] is defined and link['ttyname'] not in ['', [], None] %}
 {{ 'BindsTo=sys-devices-virtual-net-' + link['ttyname'] + '.device' }}
 {{ 'After=sys-devices-virtual-net-' + link['ttyname'] + '.device' }}
+{% endif %}
+{% if link['systemd_start_limit_interval_sec'] is defined and link['systemd_start_limit_interval_sec'] != '' %}
+{{ 'StartLimitIntervalSec=' ~ link['systemd_start_limit_interval_sec'] }}
+{% endif %}
+{% if link['systemd_start_limit_burst'] is defined and link['systemd_start_limit_burst'] != '' %}
+{{ 'StartLimitBurst=' ~ link['systemd_start_limit_burst'] }}
+{% endif %}
+{% if (link['systemd_restart'] is defined and link['systemd_restart'] != '')
+   or (link['systemd_restart_sec'] is defined and link['systemd_restart_sec'] != '')
+   or (link['systemd_timeout_start_sec'] is defined and link['systemd_timeout_start_sec'] != '') %}
+
+{{ '[Service]' }}
+{% if link['systemd_restart'] is defined and link['systemd_restart'] != '' %}
+{{ 'Restart=' ~ link['systemd_restart'] }}
+{% endif %}
+{% if link['systemd_restart_sec'] is defined and link['systemd_restart_sec'] != '' %}
+{{ 'RestartSec=' ~ link['systemd_restart_sec'] }}
+{% endif %}
+{% if link['systemd_timeout_start_sec'] is defined and link['systemd_timeout_start_sec'] != '' %}
+{{ 'TimeoutStartSec=' ~ link['systemd_timeout_start_sec'] }}
+{% endif %}
+{% endif %}
